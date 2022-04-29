@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 
+// First route example
 app.get("/api/firstRoute", (req, res) => {
   res.send("First route officially created")
 })
