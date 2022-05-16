@@ -5,9 +5,9 @@ const {
   createGoal,
   updateGoal,
   deleteGoal,
-} = require("../controllers/goalControllers");
+} = require("../controllers/goalRoutesControllers");
 
-// To keep things clean, the callback functions for each route are separated into tehir own "controllers" file.
+// To keep things clean, the callback functions for each route are separated into their own "controllers" file.
 // But they could easily be done all on this file.
 
 router.get("/", getGoals);
