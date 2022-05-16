@@ -1,25 +1,21 @@
 const express = require("express");
 const router = express.Router();
+const {
+  getGoals,
+  createGoal,
+  updateGoal,
+  deleteGoal,
+} = require("../controllers/goalControllers");
 
-// First route example
-// app.get("/api/firstRoute", (req, res) => {
-//   res.send("First route officially created");
-// });
+// To keep things clean, the callback functions for each route are separated into tehir own "controllers" file.
+// But they could easily be done all on this file.
 
-router.get("/", (req, res) => {
-  res.json({ message: "Get goals" });
-});
+router.get("/", getGoals);
 
-router.post("/", (req, res) => {
-  res.json({ message: "Goal created" });
-});
+router.post("/", createGoal);
 
-router.put("/:id", (req, res) => {
-  res.json({ message: `Goal ${req.params.id} Updated` });
-});
+router.put("/:id", updateGoal);
 
-router.delete("/:id", (req, res) => {
-  res.json({ message: `Goal ${req.params.id} deleted` });
-});
+router.delete("/:id", deleteGoal);
 
 module.exports = router;
