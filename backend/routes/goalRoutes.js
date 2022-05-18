@@ -7,15 +7,15 @@ const {
   deleteGoal,
 } = require("../controllers/goalRoutesControllers");
 
-// To keep things clean, the callback functions for each route are separated into their own "controllers" file.
-// But they could easily be done all on this file.
+// To keep things clean, the callback functions for each route are separated into their own "controllers" file... But they could easily be done all on this file.
 
-router.get("/", getGoals);
+// http://localhost:3000/ +  whatever route
+router.get("/api/goals", getGoals);
 
-router.post("/", createGoal);
+router.post("/api/goals", createGoal);
 
-router.put("/:id", updateGoal);
+router.put("/api/goals/:id", updateGoal);
 
-router.delete("/:id", deleteGoal);
+router.delete("/api/goals/:id", deleteGoal);
 
 module.exports = router;
