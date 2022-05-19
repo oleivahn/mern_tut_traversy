@@ -1,8 +1,13 @@
 const express = require('express');
+const colors = require('colors'); // Once added, can be used anywhere
+// MAKE SURE YOU HAVE YOUR .env FILE CREATED!!!
 const dotenv = require('dotenv').config();
 const { errorHandler } = require('./middleware/errorMiddleware');
 
+const connectDB = require('./config/db');
 const port = process.env.PORT || 3000;
+
+connectDB();
 
 const app = express();
 

@@ -1,45 +1,78 @@
 const asyncHandler = require('express-async-handler');
 
-// @desc    Get goals
-// @route   GET /api/goals
-// @access  Private
+const GoalModel = require('../models/goalModel');
+
+// /api/goals
 const getGoals = asyncHandler(async (req, res) => {
-  res.json({ message: 'Get goals' });
+  const goals = await GoalModel.find();
+
+  // res.json({ message: 'Get goals' });
+  res.json(goals);
 });
 
-// @desc    Create a goal
-// @route   POST /api/goals
-// @access  Private
+// /api/goals
 const createGoal = asyncHandler(async (req, res) => {
   // error handler for a bad request. If no field called "text"... throw error
   if (!req.body.text) {
     // NORMAL WAY TO HANDLE ERRORS
-    res.status(400).json({
-      message: 'Please add a text field',
-      reason: `Need a field called 'text' on the request's body`,
-    });
+    // res.status(400).json({
+    //   message: 'Please add a text field',
+    //   reason: `Need a field called 'text' on the request's body`,
+    // });
 
     // CUSTOM WAY TO HANDLE ERRORS USING EXPRESS OWN ERROR HANDLER AND MIDDLEWARE
-    // res.status(400);
-    // throw new Error('Pleaseeee add a text field');
+    res.status(400);
+    throw new Error('Pleaseeee add a text field');
   }
 
-  console.log(req.body);
-  res.json({ message: 'Goal created' });
+  const goal = await GoalModel.create({
+    text: req.body.text,
+    reps: req.body.reps,
+  });
+
+  // send back the goal for feedback
+  res.status(200).json(goal);
 });
 
-// @desc    Update a goal
-// @route   PUT /api/goals/:id
-// @access  Private
+// /api/goals/:id
 const updateGoal = asyncHandler(async (req, res) => {
-  res.json({ message: `Goal ${req.params.id} updated` });
+  const goalId = await GoalModel.findById(req.params.id);
+
+  if (!goalId) {
+    res.status(400);
+    throw new Error('Goal ID not found');
+  }
+
+  const updatedGoal = await GoalModel.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+    }
+  );
+
+  // OPTIONAL: res.status(200).json({ UPDATED: true, ...updatedGoal._doc });
+  res.status(200).json({ updated: 'successfully', updatedGoal });
 });
 
-// @desc    Delete a goal
-// @route   DELETE /api/goals/:id
-// @access  Private
+// /api/goals:id
 const deleteGoal = asyncHandler(async (req, res) => {
-  res.json({ message: `Goal ${req.params.id} deleted` });
+  const goalId = await GoalModel.findById(req.params.id);
+
+  // console.log(goalId);
+  if (!goalId) {
+    console.log("Didn't find anything");
+    res.status(400);
+    throw new Error('Goal ID not found');
+  }
+
+  // const deletedGoal = await GoalModel.findByIdAndDelete(req.params.id);
+  await goalId.remove();
+
+  // OPTIONAL: res.status(200).json({ UPDATED: true, ...updatedGoal._doc });
+  res
+    .status(200)
+    .json({ id: req.params.id, status: 'Item removed successfully' });
 });
 
 module.exports = {
