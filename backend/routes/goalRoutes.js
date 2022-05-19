@@ -1,21 +1,21 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const {
   getGoals,
   createGoal,
   updateGoal,
   deleteGoal,
-} = require("../controllers/goalRoutesControllers");
+} = require('../controllers/goalRoutesControllers');
 
 // To keep things clean, the callback functions for each route are separated into their own "controllers" file... But they could easily be done all on this file.
 
 // http://localhost:3000/ +  whatever route
-router.get("/api/goals", getGoals);
+router.get('/', getGoals);
 
-router.post("/api/goals", createGoal);
+router.post('/', createGoal);
 
-router.put("/api/goals/:id", updateGoal);
+router.put('/:id', updateGoal);
 
-router.delete("/api/goals/:id", deleteGoal);
+router.delete('/:id', deleteGoal);
 
 module.exports = router;
