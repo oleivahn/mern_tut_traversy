@@ -22,7 +22,7 @@ const createGoal = asyncHandler(async (req, res) => {
 
     // CUSTOM WAY TO HANDLE ERRORS USING EXPRESS OWN ERROR HANDLER AND MIDDLEWARE
     res.status(400);
-    throw new Error('Pleaseeee add a text field');
+    throw new Error("Please add a 'text' field!");
   }
 
   const goal = await GoalModel.create({
@@ -31,7 +31,7 @@ const createGoal = asyncHandler(async (req, res) => {
   });
 
   // send back the goal for feedback
-  res.status(200).json(goal);
+  res.status(200).json({ Status: 'Goal successfully created', goal });
 });
 
 // /api/goals/:id
@@ -52,7 +52,7 @@ const updateGoal = asyncHandler(async (req, res) => {
   );
 
   // OPTIONAL: res.status(200).json({ UPDATED: true, ...updatedGoal._doc });
-  res.status(200).json({ updated: 'successfully', updatedGoal });
+  res.status(200).json({ Status: 'Goal successfully updated', updatedGoal });
 });
 
 // /api/goals:id
@@ -70,7 +70,7 @@ const deleteGoal = asyncHandler(async (req, res) => {
   // OPTIONAL: res.status(200).json({ UPDATED: true, ...updatedGoal._doc });
   res
     .status(200)
-    .json({ id: req.params.id, status: 'Item removed successfully' });
+    .json({ Status: 'Goal successfully removed', id: req.params.id });
 });
 
 module.exports = {
