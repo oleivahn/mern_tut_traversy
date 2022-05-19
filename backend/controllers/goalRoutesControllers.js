@@ -59,9 +59,7 @@ const updateGoal = asyncHandler(async (req, res) => {
 const deleteGoal = asyncHandler(async (req, res) => {
   const goalId = await GoalModel.findById(req.params.id);
 
-  // console.log(goalId);
   if (!goalId) {
-    console.log("Didn't find anything");
     res.status(400);
     throw new Error('Goal ID not found');
   }
